@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Promotion Prediction</title>
+    <link rel="stylesheet" href="{% static 'prediction/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating background shapes -->
+    <div class="bg-animation">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        <div class="floating-shape shape4"></div>
+    </div>
+
+    <div class="container">
+        <h1>Employee Promotion Prediction</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <!-- Dropdowns for categorical inputs -->
+                <div class="form-group">
+                    <label>Department</label>
+                    <select name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Sales & Marketing">Sales & Marketing</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Analytics">Analytics</option>
+                        <option value="R&D">R&D</option>
+                        <option value="Procurement">Procurement</option>
+                        <option value="Finance">Finance</option>
+                        <option value="HR">HR</option>
+                        <option value="Legal">Legal</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Region</label>
+                    <select name="region" required>
+                        <option value="">Select Region</option>
+                        <option value="region_7">region_7</option>
+                        <option value="region_22">region_22</option>
+                        <option value="region_19">region_19</option>
+                        <option value="region_23">region_23</option>
+                        <option value="region_26">region_26</option>
+                        <!-- Add remaining regions -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Education</label>
+                    <select name="education" required>
+                        <option value="">Select Education</option>
+                        <option value="Bachelor">Bachelor</option>
+                        <option value="Master">Master</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Recruitment Channel</label>
+                    <select name="recruitment_channel" required>
+                        <option value="">Select Channel</option>
+                        <option value="Sourcing">Sourcing</option>
+                        <option value="Referral">Referral</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Numeric Inputs -->
+                <div class="form-group">
+                    <label>No of Trainings</label>
+                    <input type="number" name="no_of_trainings" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="age" min="18" required>
+                </div>
+                <div class="form-group">
+                    <label>Previous Year Rating</label>
+                    <input type="number" name="previous_year_rating" min="1" max="5" required>
+                </div>
+                <div class="form-group">
+                    <label>Length of Service</label>
+                    <input type="number" name="length_of_service" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Awards Won</label>
+                    <input type="number" name="awards_won" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Average Training Score</label>
+                    <input type="number" step="0.01" name="avg_training_score" min="0" max="100" required>
+                </div>
+            </div>
+
+            <button type="submit">🔮 Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <h2>🎯 Prediction: {{ prediction }}</h2>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

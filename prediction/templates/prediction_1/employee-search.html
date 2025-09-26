@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Performance Search</title>
+    <link rel="stylesheet" href="{% static 'prediction/employee_search.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating background shapes -->
+    <div class="bg-animation">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        <div class="floating-shape shape4"></div>
+    </div>
+
+    <div class="container">
+        <h1>Employee Performance Search</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="search-section">
+                <input type="text" name="employeeSearch" placeholder="Enter Employee ID..." value="{{ search_value }}" required>
+                <button type="submit">🔍 Search</button>
+                <!-- Optional button for other actions -->
+                <button type="submit" name="other" value="1">👥 Other Employee Performance</button>
+            </div>
+        </form>
+
+        {% if employee_data %}
+            <div class="result">
+                <h2>Employee Performance Details</h2>
+                {% for emp in employee_data %}
+                <table border="1">
+                    {% for key, value in emp.items %}
+                    <tr>
+                        <th>{{ key|capfirst }}</th>
+                        <td>
+                            {% if key == 'is_promoted' %}
+                                {% if value == 1 %}Yes{% else %}No{% endif %}
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                {% endfor %}
+            </div>
+        {% elif search_value %}
+            <div class="result">
+                <h3>No employee found with ID "{{ search_value }}"!</h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
